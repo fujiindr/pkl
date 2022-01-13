@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
-class ApiUserController extends Controller
+class ApiKategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,15 @@ class ApiUserController extends Controller
      */
     public function index()
     {
-        $user = user::where('name', 'Erin Rafani')
+        $kategori = kategori::where('nama_kategori', 'Bola Voli')
         ->get();
 
-        if ($user->count() >= 1){
+        if ($kategori->count() >= 1){
             return response()->json([
                 'status' => true,
                 'code' => 200,
                 'message' => 'berhasil',
-                'data' => $user,
+                'data' => $kategori,
             ]);
         }else{
             return response()->json([
@@ -53,15 +53,13 @@ class ApiUserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new user;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password =bcrypt($request->password);
-        $user->save();
+        $kategori = new kategori;
+        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->save();
         return response()->json([
             'success' => true,
-            'message' => 'Data User Berhasil dibuat',
-            'data' => $user,
+            'message' => 'Data Kategori Berhasil dibuat',
+            'data' => $kategori,
         ], 201);
     }
 
@@ -73,17 +71,17 @@ class ApiUserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        if ($user){
+        $kategori = kategori::find($id);
+        if ($kategori){
             return response()->json([
                 'success' => true,
-                'message' => 'Show Data user',
-                'data' => $user,
+                'message' => 'Show Data kategori',
+                'data' => $kategori,
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Data User tidak ditemukan',
+                'message' => 'Data kategori tidak ditemukan',
                 'data' => [],
             ], 404);
         }
@@ -109,21 +107,19 @@ class ApiUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        if ($user){
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->save();
+        $kategori = kategori::find($id);
+        if ($kategori){
+            $kategori->nama_kategori = $request->nama_kategori;
+            $kategori->save();
             return response()->json([
                 'success' => true,
-                'message' => 'Data User Berhasil dibuat',
-                'data' => $user,
+                'message' => 'Data kategori Berhasil dibuat',
+                'data' => $kategori,
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Data User tidak ditemukan',
+                'message' => 'Data kategori tidak ditemukan',
                 'data' => [],
             ], 404);
         }
@@ -137,18 +133,18 @@ class ApiUserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        if ($user){
-            $user->delete();
+        $kategori = kategori::find($id);
+        if ($kategori){
+            $kategori->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'Data User Berhasil dihapus',
-                'data' => $user,
+                'message' => 'Data kategori Berhasil dihapus',
+                'data' => $kategori,
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Data User tidak ditemukan',
+                'message' => 'Data kategori tidak ditemukan',
                 'data' => [],
             ], 404);
         }
